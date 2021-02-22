@@ -46,6 +46,7 @@ Plase use english for the answers and you can use drawings for a better descript
 
 ## Bonus Points
 While not required any of the following will add some major bonus points to your submission:
+
 * Setup an asset pipeline with Gulp, Grunt, etc.
 * Use Angular
 * Use Composer
