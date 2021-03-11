@@ -23,6 +23,8 @@ In order to be considered for the Backend position, you must complete the follow
 * Create a basic template and utilize a CSS framework (Bootstrap, Pure, etc.)
 * Create a route and view which displays the recent commits by author from the database. 
 * If the commit hash ends in a number, color that row light blue (#E6F1F6).
+* Keep your solution flexible enought to be able to later on provide support for the bitbucket-api/gitlab-api etc.
+
   
 ### Once Complete
 1. Create a SETUP.md in the base directory with setup instructions.
@@ -43,6 +45,7 @@ Plase use english for the answers and you can use drawings for a better descript
 1. How were you debugging this mini-project? Which tools?
 2. How were you testing the mini-project?
 3. Imagine this mini-project needs microservices with one single database, how would you draft an architecture? 
+4. How would your solution differ when all over the sudden instead of saving to a Database you would have to call another external API to store and receive the commits.
 
 ## Bonus Points
 While not required any of the following will add some major bonus points to your submission:
