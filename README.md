@@ -16,13 +16,21 @@ In order to be considered for the Backend position, you must complete the follow
 2. Create a *source* folder to contain your code. 
 3. In the *source* directory, please create a PHP web application using a Symfony framework
 4. Your application should accomplish the following:
+
 * Connect to the [Github API](http://developer.github.com/)
+
 * Find the [nodejs/node](https://github.com/nodejs/node) repository
+
 * Find the 25 most recent commits
+
 * Create a model and store the 25 most recent commits in the database. Make sure to avoid any duplicates.
+
 * Create a basic template and utilize a CSS framework (Bootstrap, Pure, etc.)
+
 * Create a route and view which displays the recent commits by author from the database. 
+
 * If the commit hash ends in a number, color that row light blue (#E6F1F6).
+
 * Keep your solution flexible enought to be able to later on provide support for the bitbucket-api/gitlab-api etc.
 
   
