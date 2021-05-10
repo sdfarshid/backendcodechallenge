@@ -36,7 +36,7 @@ In order to be considered for the Backend position, you must complete the follow
   
 ### Once Complete
 1. Create a SETUP.md in the base directory with setup instructions.
-2. Send us a pull request, we will review your code and get back to you
+2. Please let us know that you have completed the challege and grant access to the repo to jobs@circunomics.com
 
 ## Key Points We Are Looking For
 * Demonstration of core MVC patterns
