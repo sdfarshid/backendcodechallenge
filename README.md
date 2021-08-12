@@ -1,4 +1,4 @@
-## Backend Code Challange 
+## Backend Coding Challenge 
 
 In order to be considered for the Backend position, you must complete the following task. 
 
