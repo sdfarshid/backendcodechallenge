@@ -43,6 +43,8 @@ In order to be considered for the Backend position, you must complete the follow
 * Quality commit history
 * Ability to use libraries
 * Ability to create basic model and retrieve information from the databse
+* Use Composer
+* Use Docker
  
 ## Implementation and Conceptual Questions
 
@@ -55,11 +57,10 @@ Plase use english for the answers and you can use drawings for a better descript
 3. Imagine this mini-project needs microservices with one single database, how would you draft an architecture? 
 4. How would your solution differ when all over the sudden instead of saving to a Database you would have to call another external API to store and receive the commits.
 
+
 ## Bonus Points
 While not required any of the following will add some major bonus points to your submission:
 
 * Setup an asset pipeline with Gulp, Grunt, etc.
 * Use Angular
-* Use Composer
-* Use Docker
 * Create a set of provsioning scripts with Puppet, Chef, Ansible, etc...
