@@ -6,7 +6,7 @@ In order to be considered for the Backend position, you must complete the follow
 
 ### Prerequisites
 
-- Experience with [PHP](http://www.php.net) Symfony framework
+- Experience with [PHP](http://www.php.net), Symfony or other frameworks (e.g. Laravel) 
 - Database knowledge (MySQL, MongoDB, Postgres, etc.)
 - Basic understanding of HTML/CSS
 
