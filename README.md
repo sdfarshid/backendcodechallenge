@@ -7,8 +7,8 @@ In order to be considered for the Backend position, you must complete the follow
 ### Prerequisites
 
 - Experience with [PHP](http://www.php.net) Symfony framework
-- Understanding of CSS frameworks and grid systems (Bootstrap, Pure, etc.)
 - Database knowledge (MySQL, MongoDB, Postgres, etc.)
+- Basic understanding of HTML/CSS
 
 ## Task
 
@@ -21,17 +21,17 @@ In order to be considered for the Backend position, you must complete the follow
 
 * Find the [nodejs/node](https://github.com/nodejs/node) repository
 
-* Find the 25 most recent commits
+* Find the 1000 most recent commits
 
-* Create a model and store the 25 most recent commits in the database. Make sure to avoid any duplicates.
+* Create a model and store the 1000 most recent commits in the database. Make sure to avoid any duplicates.
 
-* Create a basic template and utilize a CSS framework (Bootstrap, Pure, etc.)
+* Create a basic template and utilize plain HTML/CSS or Bootstrap
 
 * Create a route and view which displays the recent commits by author from the database. 
 
 * If the commit hash ends in a number, color that row light blue (#E6F1F6).
 
-* Keep your solution flexible enought to be able to later on provide support for the bitbucket-api/gitlab-api etc.
+* Keep your solution flexible enought to be able to later on provide support for the bitbucket-api/gitlab-api etc...
 
   
 ### Once Complete
@@ -39,12 +39,12 @@ In order to be considered for the Backend position, you must complete the follow
 2. Please let us know that you have completed the challege and grant access to the repo to jobs@circunomics.com
 
 ## Key Points We Are Looking For
-* Demonstration of core MVC patterns
-* Quality commit history
+* Scalable solution
 * Ability to use libraries
 * Ability to create basic model and retrieve information from the databse
 * Use Composer
 * Use Docker
+* Quality commit history
  
 ## Implementation and Conceptual Questions
 
@@ -60,7 +60,6 @@ Plase use english for the answers and you can use drawings for a better descript
 
 ## Bonus Points
 While not required any of the following will add some major bonus points to your submission:
-
 * Setup an asset pipeline with Gulp, Grunt, etc.
-* Use Angular
 * Create a set of provsioning scripts with Puppet, Chef, Ansible, etc...
+* Functional and/or unit test 
