@@ -2,8 +2,6 @@
 
 In order to be considered for the Backend position, you must complete the following task. 
 
-*Note: This task should take no longer than 2-3 hours at the most.*
-
 ### Prerequisites
 
 - Experience with [PHP](http://www.php.net), Symfony or other frameworks (e.g. Laravel) 
