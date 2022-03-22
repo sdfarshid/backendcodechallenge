@@ -10,7 +10,7 @@ In order to be considered for the Backend position, you must complete the follow
 
 ## Task
 
-1. Fork this repository
+1. Fork this repository on <strong>(Bitbucket only)</strong>, if you don't have account on Bitbucket, here you can signup [https://www.atlassian.com/software/bitbucket/bundle]
 2. Create a *source* folder to contain your code. 
 3. In the *source* directory, please create a PHP web application using a Symfony framework
 4. Your application should accomplish the following:
