@@ -1,0 +1,41 @@
+version: "3.9"
+services:
+  fetcher_db:
+    image: postgres
+    container_name: fetcher_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  fetcher_app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: fetcher_app
+    depends_on:
+      - fetcher_db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      APP_PORT: ${APP_PORT}
+    ports:
+      - "${APP_PORT}:8000"
+    volumes:
+      - .:/app
+      - ./app/logs:/app/logs
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+volumes:
+  postgres_data:
