@@ -31,11 +31,5 @@ services:
       - "${APP_PORT}:8000"
     volumes:
       - .:/app
-      - ./app/logs:/app/logs
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
 volumes:
   postgres_data:

@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+from app.utilities.log import logger, DebugWaring
 
 app = FastAPI(
     title="Fetcher Service",
@@ -12,5 +13,6 @@ app = FastAPI(
 
 @app.get("/")
 async def root():
+    DebugWaring("Root endpoint accessed")
     return {"message": "Hello Fetcher Service!"}
 
