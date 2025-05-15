@@ -1,4 +1,4 @@
-from unittest.mock import AsyncMock, patch
+from unittest.mock import AsyncMock, patch, MagicMock
 
 import pytest
 
@@ -7,8 +7,8 @@ from app.infrastructure.fetchers.github.github_fetcher import GithubFetcher
 
 @pytest.mark.asyncio
 async def test_github_fetcher_fetch_raw_commits():
-    fetcher = GithubFetcher()
-    mock_response = [ {
+    fetcher = GithubFetcher(token="fake_token")
+    mock_commits = [ {
                         "url": "https://api.github.com/repos/octocat/Hello-World/commits/6dcb09b5b57875f334f61aebed695e2e4193db5e",
                         "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
                         "node_id": "MDY6Q29tbWl0NmRjYjA5YjViNTc4NzVmMzM0ZjYxYWViZWQ2OTVlMmU0MTkzZGI1ZQ==",
@@ -82,11 +82,14 @@ async def test_github_fetcher_fetch_raw_commits():
                         ]
                       } ]
 
-    mock_call_api = AsyncMock(return_value=mock_response)
+    mock_repo = MagicMock()
+    mock_repo.get_commits.return_value.get_page.return_value =[
+        MagicMock(raw_data=commit) for commit in mock_commits
+    ]
 
-    with patch("app.infrastructure.fetchers.github.github_fetcher.call_api", mock_call_api):
-        commits = await fetcher.fetch_raw_commits("tken", "owner/repo", 100, 1)
+    with patch.object(fetcher.github,"get_repo",return_value=mock_repo) as mock_get_repo:
+        commits = await fetcher.fetch_raw_commits( "owner/repo", 1)
 
     assert len(commits) == 1
     assert commits[0]["sha"] == "6dcb09b5b57875f334f61aebed695e2e4193db5e"
-    mock_call_api.assert_called_once()
+    mock_get_repo.assert_called_once_with("owner/repo")
