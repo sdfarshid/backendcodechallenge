@@ -9,13 +9,12 @@ from app.infrastructure.fetchers.github.github_fetcher import GithubFetcher
 class GithubFetcherAdapter(FetcherAdapterInterface):
     def __init__(
         self,
-        github_fetcher: GithubFetcher = Depends(GithubFetcher),
         token: str = Depends(get_github_token),
         repo: str = Depends(get_github_repo),
     ):
-        self.github_fetcher = github_fetcher
-        self.token = token
         self.repo = repo
+        self.github_fetcher = GithubFetcher(token=token)
+
 
     async def fetch(self, count: int) -> List[Dict]:
         commits = []
@@ -26,9 +25,8 @@ class GithubFetcherAdapter(FetcherAdapterInterface):
             if len(commits) >= count:
                 break
 
-            raw_commits = await self.github_fetcher.fetch_raw_commits(
-                self.token, self.repo, per_page, page
-            )
+            raw_commits = await self.github_fetcher.fetch_raw_commits(self.repo, page)
+
             for commit in raw_commits:
                 adapted_commit = {
                     "hash": commit["sha"],

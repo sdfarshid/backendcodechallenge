@@ -6,3 +6,6 @@ alembic
 pydantic>=2
 pydantic-settings
 python-dotenv
+pytest
+pytest-asyncio
+PyGithub
