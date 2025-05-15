@@ -3,6 +3,10 @@ import sys
 from pathlib import Path
 
 log_dir = Path(__file__).parent.parent / "logs"
+
+print(Path(__file__))
+print(log_dir)
+
 log_dir.mkdir(parents=True, exist_ok=True)
 
 logger = logging.getLogger("app")
