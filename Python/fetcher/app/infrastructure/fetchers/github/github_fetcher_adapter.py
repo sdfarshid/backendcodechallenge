@@ -1,16 +1,20 @@
-from typing import Dict, List
-
-from app.config.dependencies import get_github_token, get_github_repo
+from typing import Dict, List, Optional
 from app.infrastructure.fetchers.fetcher_adapter_interface import FetcherAdapterInterface
 from app.infrastructure.fetchers.github.github_fetcher import GithubFetcher
 
 
 class GithubFetcherAdapter(FetcherAdapterInterface):
-    DEFAULT_PER_PAGE = 100
+    _DEFAULT_PER_PAGE = 100
 
-    def __init__(self, token: str,  repo: str):
+    def __init__(self, token: str, repo: str):
         self.repo = repo
-        self.github_fetcher = GithubFetcher(token=token,per_page=self.DEFAULT_PER_PAGE)
+        self.github_fetcher = GithubFetcher(token=token, per_page=self._DEFAULT_PER_PAGE)
+
+
+    @property
+    def default_per_page(self) -> int:
+        return self._DEFAULT_PER_PAGE
+
 
     async def fetch(self, count: int, page: int) -> List[Dict]:
         raw_commits = await self.github_fetcher.fetch_raw_commits(self.repo, page)
