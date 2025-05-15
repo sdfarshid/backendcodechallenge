@@ -5,7 +5,7 @@ from typing import Dict, List
 class FetcherAdapterInterface(ABC):
 
     @abstractmethod
-    async def fetch(self, count: int) -> List[Dict]:
+    async def fetch(self, count: int, page:int) -> List[Dict]:
         pass
 
 

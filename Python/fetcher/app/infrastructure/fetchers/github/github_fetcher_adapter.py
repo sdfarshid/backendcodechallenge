@@ -12,25 +12,13 @@ class GithubFetcherAdapter(FetcherAdapterInterface):
         self.repo = repo
         self.github_fetcher = GithubFetcher(token=token,per_page=self.DEFAULT_PER_PAGE)
 
-
-    async def fetch(self, count: int) -> List[Dict]:
+    async def fetch(self, count: int, page: int) -> List[Dict]:
+        raw_commits = await self.github_fetcher.fetch_raw_commits(self.repo, page)
         commits = []
-        pages = (count + self.DEFAULT_PER_PAGE - 1)
-
-        for page in range(1, pages + 1):
-            if len(commits) >= count:
-                break
-
-            raw_commits = await self.github_fetcher.fetch_raw_commits(self.repo, page)
-
-            for commit in raw_commits:
-                adapted_commit = {
-                    "hash": commit["sha"],
-                    "author": commit["author"]["login"] if commit.get("author") else "unknown"
-                }
-                commits.append(adapted_commit)
-
-            if len(raw_commits) < self.DEFAULT_PER_PAGE:
-                break
-
-        return commits[:count]
+        for commit in raw_commits:
+            commits.append({
+                "hash": commit["sha"],
+                "author": commit["author"]["login"] if commit.get("author") else "unknown",
+                "created_at": commit["commit"]["author"]["date"]
+            })
+        return commits

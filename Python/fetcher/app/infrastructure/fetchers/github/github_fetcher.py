@@ -17,3 +17,6 @@ class GithubFetcher:
             return [commit.raw_data for commit in commits ]
 
         return await asyncio.to_thread(sync_fetch_raw_commits)
+
+
+
