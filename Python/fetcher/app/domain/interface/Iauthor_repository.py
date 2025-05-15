@@ -12,7 +12,7 @@ class IAuthorRepository(ABC):
         pass
 
     @abstractmethod
-    async def get_author_by_names(self, name: list[str]) -> List[Author] | None:
+    async def get_authors_by_names(self, name: list[str]) -> List[Author] | None:
         pass
 
     @abstractmethod

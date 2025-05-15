@@ -40,7 +40,7 @@ class AuthorRepository(IAuthorRepository):
             DebugError(f" AuthorRepository - get_author_by_name :  {e}")
             raise RuntimeError(f"Database error while fetching author by name: {e}") from e
 
-    async def get_author_by_names(self, names: list[str]) -> List[Author] | None:
+    async def get_authors_by_names(self, names: list[str]) -> List[Author] | None:
         try:
             stmt = select(AuthorModel).where(AuthorModel.name.in_(names))
             result = await self.db.execute(stmt)
