@@ -1,11 +1,11 @@
+from app.domain.enums.fetchet_source import FetcherSource
 from app.infrastructure.fetchers.fetcher_adapter_interface import FetcherAdapterInterface
 from app.infrastructure.fetchers.github.github_fetcher_adapter import GithubFetcherAdapter
 
 
 class FetcherFactory:
     FETCHERS = {
-        "github": GithubFetcherAdapter,
-        # "bitbucket": BitbucketFetcherAdapter,
+        FetcherSource.GITHUB: GithubFetcherAdapter
     }
 
 
