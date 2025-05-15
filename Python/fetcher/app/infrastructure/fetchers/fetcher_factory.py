@@ -1,3 +1,5 @@
+
+from app.config.dependencies import get_github_token, get_github_repo
 from app.domain.enums.fetchet_source import FetcherSource
 from app.infrastructure.fetchers.fetcher_adapter_interface import FetcherAdapterInterface
 from app.infrastructure.fetchers.github.github_fetcher_adapter import GithubFetcherAdapter
@@ -5,7 +7,10 @@ from app.infrastructure.fetchers.github.github_fetcher_adapter import GithubFetc
 
 class FetcherFactory:
     FETCHERS = {
-        FetcherSource.GITHUB: GithubFetcherAdapter
+        FetcherSource.GITHUB: lambda : GithubFetcherAdapter(
+            token=get_github_token(),
+            repo=get_github_repo()
+        )
     }
 
 
