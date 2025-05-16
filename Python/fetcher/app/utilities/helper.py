@@ -1,6 +1,27 @@
+from functools import wraps
 from typing import Optional
 import httpx
+from fastapi import HTTPException
+
 from app.utilities.log import DebugError
+
+
+def handle_exceptions(func):
+    @wraps(func)
+    async def wrapper(*args, **kwargs):
+        try:
+            return await func(*args, **kwargs)
+        except ValueError as value_error:
+            raise HTTPException(status_code=404, detail=str(value_error))
+        except HTTPException as http_error:
+            raise http_error
+        except Exception as error:
+            DebugError(f"Error in {func.__name__}: {error}")
+            raise HTTPException(status_code=500, detail="Internal server error")
+
+    return wrapper
+
+
 
 
 async def call_api(
@@ -36,4 +57,5 @@ async def call_api(
     except Exception as e:
         DebugError(f"Unexpected error occurred: {e} - {full_url}")
         raise ValueError(f"Unexpected error: {e}")
+
 
