@@ -1,7 +1,7 @@
 from uuid import UUID, uuid4
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class Author(BaseModel):
-    id: UUID = uuid4()
+    id: UUID = Field(default_factory=uuid4)
     name:str
