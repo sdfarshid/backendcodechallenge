@@ -23,7 +23,15 @@ class AuthorRepository(IAuthorRepository):
         self.db = db
 
     async def add_author(self, author: Author) -> Author:
-        pass
+        try:
+            author_db =  mapper.author_model_to_db_model(author)
+            self.db.add(author_db)
+            await self.db.commit()
+            await self.db.refresh(author_db)
+            return author_db
+        except Exception as e:
+            await self.db.rollback()
+            raise e
 
     async def get_author_by_name(self, name: str) -> Author | None:
         try:
