@@ -3,14 +3,14 @@ from typing import Any, AsyncGenerator
 
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
-from app.config.config import settings
+from app.config.config import get_settings
 
 
 logger = logging.getLogger(__name__)
 
 
 try:
-    engine = create_async_engine(settings.DATABASE_URL, echo=True)
+    engine = create_async_engine(get_settings().DATABASE_URL, echo=True)
     logger.info("Database engine created successfully")
 except Exception as e:
     logger.critical(f"Database connection failed: {str(e)}")
