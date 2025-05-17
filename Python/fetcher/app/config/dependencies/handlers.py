@@ -20,5 +20,9 @@ def get_get_authors_by_name_handler(repo: IAuthorRepository = Depends(get_author
     return GetAuthorsByNamesCommandHandler(repo, commit_logger)
 
 
+def get_list_authors_handler(repo: IAuthorRepository = Depends(get_author_repository)) -> ListAuthorsHandler:
+    return ListAuthorsHandler(repo, commit_logger)
+
+
 def get_store_commits_handler(repo: ICommitRepository = Depends(get_commit_repository)) -> StoreCommitsCommandHandler:
     return StoreCommitsCommandHandler(repo, commit_logger)
