@@ -21,7 +21,8 @@ def get_commit_service(
 
 def get_author_service(
     create_handler: CreateAuthorCommandHandler = Depends(get_create_author_handler),
-    get_handler: GetAuthorsByNamesCommandHandler = Depends(get_get_authors_by_name_handler)
+    filter_handler: GetAuthorsByNamesCommandHandler = Depends(get_authors_by_name_handler),
+    get_list_handler: GetAuthorsByNamesCommandHandler = Depends(get_list_authors_handler)
 ) -> AuthorService:
     return AuthorService(get_handler, create_handler)
 
