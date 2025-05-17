@@ -2,6 +2,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import List
 
+from app.application.mixins.pagination import PaginationParams
 from app.domain.aggregates.author import Author
 
 
@@ -17,5 +18,8 @@ class IAuthorRepository(ABC):
 
     @abstractmethod
     async def add_author(self, author: Author) -> Author:
+        pass
+
+    async def list_authors(self, pagination: PaginationParams) -> List[Author] | None:
         pass
 

@@ -6,6 +6,7 @@ from fastapi import Depends
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.application.mixins.pagination import PaginationParams
 from app.domain.aggregates.author import Author
 from app.domain.interface.Iauthor_repository import IAuthorRepository
 from app.infrastructure.database.models.author import AuthorModel
@@ -58,5 +59,18 @@ class AuthorRepository(IAuthorRepository):
 
         except SQLAlchemyError as e:
             raise RuntimeError(f"Database error while fetching authors by names: {e}") from e
+
+
+    async def list_authors(self, pagination: PaginationParams) -> List[Author] | None:
+        try:
+            result = await self.db.execute(
+                select(AuthorModel).offset(pagination.offset).limit(pagination.limit)
+            )
+            authors_model =  result.scalars().all()
+
+            return [mapper.author_db_to_domain_model(author) for author in authors_model]
+
+        except SQLAlchemyError as e:
+            raise RuntimeError(f"Database error while fetching authors : {e}") from e
 
 
