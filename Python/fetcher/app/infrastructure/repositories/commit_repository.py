@@ -54,7 +54,7 @@ class CommitRepository(ICommitRepository):
             if rows_model is None:
                 return None
 
-            return mapper.commit_db_to_domain_model(rows_model)
+            return [mapper.commit_db_to_domain_model(commit) for commit in rows_model]
 
         except SQLAlchemyError as e:
             DebugError(f" AuthorRepository - get_author_by_name :  {e}")
