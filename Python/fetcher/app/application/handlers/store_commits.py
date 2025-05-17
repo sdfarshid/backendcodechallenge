@@ -1,9 +1,7 @@
-from fastapi import Depends
 
 from app.application.commands.store_commits import StoreCommitsCommand
 from app.domain.entities.commit import Commit
 from app.domain.interface.Icommit_repository import ICommitRepository
-from app.infrastructure.repositories.commit_repository import CommitRepository
 from app.utilities.log import commit_logger
 
 
