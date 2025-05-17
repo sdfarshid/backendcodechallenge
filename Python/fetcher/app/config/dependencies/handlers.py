@@ -1,5 +1,7 @@
 from fastapi import Depends
 
+from app.application.handlers.list_authors import ListAuthorsHandler
+from app.application.handlers.list_commits import ListCompaniesHandler
 from app.config.dependencies.repositories import get_author_repository, get_commit_repository
 from app.domain.interface.Iauthor_repository import IAuthorRepository
 from app.domain.interface.Icommit_repository import ICommitRepository
@@ -16,7 +18,7 @@ def get_create_author_handler(repo: IAuthorRepository = Depends(get_author_repos
 
 
 
-def get_get_authors_by_name_handler(repo: IAuthorRepository = Depends(get_author_repository)) -> GetAuthorsByNamesCommandHandler:
+def get_authors_by_name_handler(repo: IAuthorRepository = Depends(get_author_repository)) -> GetAuthorsByNamesCommandHandler:
     return GetAuthorsByNamesCommandHandler(repo, commit_logger)
 
 
@@ -26,3 +28,7 @@ def get_list_authors_handler(repo: IAuthorRepository = Depends(get_author_reposi
 
 def get_store_commits_handler(repo: ICommitRepository = Depends(get_commit_repository)) -> StoreCommitsCommandHandler:
     return StoreCommitsCommandHandler(repo, commit_logger)
+
+
+def get_list_commits_handler(repo: ICommitRepository = Depends(get_commit_repository)) -> ListCompaniesHandler:
+    return ListCompaniesHandler(repo, commit_logger)

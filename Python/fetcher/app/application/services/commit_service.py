@@ -1,18 +1,22 @@
 from collections import defaultdict
 from typing import Dict
 
-from fastapi import Depends
 from sqlalchemy.exc import DatabaseError
 
 from app.application.commands.store_commits import StoreCommitsCommand
-from app.application.handlers.store_commits import StoreCommitsCommandHandler
-from app.utilities.log import commit_logger
+from app.application.queries.list_commits import ListCommitsQuery
+from app.domain.entities.commit import Commit
 
 
 class CommitService:
 
-    def __init__(self, store_commits_handler, logger):
+    def __init__(self,
+                 store_commits_handler,
+                 list_commits_handler,
+                 logger
+                 ):
         self.store_commits_handler = store_commits_handler
+        self.list_commits_handler = list_commits_handler
         self.logger = logger
 
 
@@ -60,6 +64,11 @@ class CommitService:
 
 
 
-    async def get_commit(self):
-        pass
+    async def get_commit(self, query: ListCommitsQuery) -> list[Commit]:
 
+        try:
+          return  await self.list_commits_handler.handle(query)
+
+        except Exception as e:
+            self.logger.error(f"group_commits_by_author have error : {e}")
+            raise

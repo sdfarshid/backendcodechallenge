@@ -2,6 +2,7 @@ from fastapi import Depends
 
 from app.application.handlers.create_author import CreateAuthorCommandHandler
 from app.application.handlers.get_author_by_names import GetAuthorsByNamesCommandHandler
+from app.application.handlers.list_commits import ListCompaniesHandler
 from app.application.handlers.store_commits import StoreCommitsCommandHandler
 from app.application.services.commit_service import CommitService
 from app.application.services.fetcher_service import FetcherService
@@ -13,12 +14,16 @@ from app.config.dependencies.handlers import (
     get_create_author_handler,
     get_authors_by_name_handler,
     get_list_authors_handler,
+    get_list_commits_handler,
 )
 
 def get_commit_service(
-    store_handler: StoreCommitsCommandHandler = Depends(get_store_commits_handler)
+    store_handler: StoreCommitsCommandHandler = Depends(get_store_commits_handler),
+    list_handler: ListCompaniesHandler = Depends(get_list_commits_handler)
 ) -> CommitService:
-    return CommitService(store_handler, commit_logger)
+    return CommitService(store_commits_handler=store_handler,
+                         list_commits_handler= list_handler,
+                         logger= commit_logger)
 
 def get_author_service(
     create_handler: CreateAuthorCommandHandler = Depends(get_create_author_handler),
