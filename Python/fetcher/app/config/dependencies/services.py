@@ -11,7 +11,8 @@ from app.utilities.log import commit_logger, fetcher_logger
 from app.config.dependencies.handlers import (
     get_store_commits_handler,
     get_create_author_handler,
-    get_get_authors_by_name_handler,
+    get_authors_by_name_handler,
+    get_list_authors_handler,
 )
 
 def get_commit_service(
