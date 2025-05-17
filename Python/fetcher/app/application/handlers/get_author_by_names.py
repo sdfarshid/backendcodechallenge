@@ -8,7 +8,7 @@ from app.utilities.log import commit_logger
 
 class GetAuthorsByNamesCommandHandler:
 
-    def __init__(self, author_repository: IAuthorRepository = Depends(AuthorRepository)):
+    def __init__(self, author_repository: IAuthorRepository, logger):
         self.repository = author_repository
         self.logger = commit_logger
 

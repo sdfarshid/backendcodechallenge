@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 from alembic import context
 
 from app.infrastructure.database.session import Base
-from app.config.config import settings
+from app.config.config import get_settings
 
 from app.infrastructure.database.models.author import AuthorModel
 from app.infrastructure.database.models.commit import CommitModel
@@ -20,7 +20,7 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # Load DB URL from env or settings
-DATABASE_URL = os.getenv("DATABASE_URL", settings.DATABASE_URL)
+DATABASE_URL = os.getenv("DATABASE_URL", get_settings().DATABASE_URL)
 config.set_main_option("sqlalchemy.url", DATABASE_URL)
 
 # For autogenerate support

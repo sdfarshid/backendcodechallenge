@@ -22,7 +22,7 @@ from app.utilities.log import DebugError
 class CommitRepository(ICommitRepository):
 
 
-    def __init__(self, db: AsyncSession = Depends(get_db)):
+    def __init__(self, db: AsyncSession):
         self.db = db
 
     async def add_commits_batch(self, commits: List[Commit]) -> int:

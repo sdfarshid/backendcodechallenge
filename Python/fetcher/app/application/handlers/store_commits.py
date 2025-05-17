@@ -9,7 +9,7 @@ from app.utilities.log import commit_logger
 
 class StoreCommitsCommandHandler:
 
-    def __init__(self, commit_repository: ICommitRepository = Depends(CommitRepository)):
+    def __init__(self, commit_repository: ICommitRepository, logger):
         self.commit_repository = commit_repository
         self.logger = commit_logger
 

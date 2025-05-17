@@ -1,6 +1,5 @@
 from app.config.config import get_settings
 
-
 def get_github_token() -> str:
     token = get_settings().GITHUB_TOKEN
     if not token or not isinstance(token, str):

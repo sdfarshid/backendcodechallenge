@@ -1,5 +1,4 @@
-
-from app.config.dependencies import get_github_token, get_github_repo
+from app.config.dependencies.settings import get_github_token, get_github_repo
 from app.domain.enums.fetchet_source import FetcherSource
 from app.infrastructure.fetchers.fetcher_adapter_interface import FetcherAdapterInterface
 from app.infrastructure.fetchers.github.github_fetcher_adapter import GithubFetcherAdapter

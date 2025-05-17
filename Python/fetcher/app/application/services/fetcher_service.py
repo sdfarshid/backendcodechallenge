@@ -2,37 +2,20 @@ import asyncio
 from collections import defaultdict
 from typing import List, Dict
 
-from fastapi import Depends
 
-from app.application.commands.crete_author import CreateAuthorCommand
 from app.application.commands.fetch_commits import FetchCommitsCommand
-from app.application.commands.store_commits import StoreCommitsCommand
-from app.application.handlers.create_author import CreateAuthorCommandHandler
-from app.application.handlers.get_author_by_names import GetAuthorsByNamesCommandHandler
-from app.application.handlers.store_commits import StoreCommitsCommandHandler
-from app.application.queries.get_authors_by_name import GetAuthorsByNamesQuery
-from app.domain.aggregates.author import Author
 from app.domain.enums.fetchet_source import FetcherSource
-from app.infrastructure.fetchers.fetcher_factory import FetcherFactory
 from tenacity import retry, stop_after_attempt, wait_exponential
-from app.utilities.log import DebugWaring, commit_logger
 
 
 class FetcherService:
 
-    def __init__(self,
-                 get_author_by_name_handler: GetAuthorsByNamesCommandHandler = Depends(GetAuthorsByNamesCommandHandler),
-                 create_author_handler: CreateAuthorCommandHandler = Depends(CreateAuthorCommandHandler),
-                 store_commits_handler: StoreCommitsCommandHandler = Depends(StoreCommitsCommandHandler),
-                 fetcher_factory: FetcherFactory = Depends(FetcherFactory),
-                 ):
-        self.get_author_by_name_handler = get_author_by_name_handler
-        self.create_author_handler = create_author_handler
+    def __init__(self, fetcher_factory, author_service, commit_service, logger):
         self.fetcher_factory = fetcher_factory
-        self.store_commits_handler = store_commits_handler
+        self.author_service = author_service
+        self.commit_service = commit_service
         self.semaphore = asyncio.Semaphore(5)
-        self.logger = commit_logger
-
+        self.logger = logger
 
     async def fetch_and_store_commits(self, command: FetchCommitsCommand):
         try:
@@ -41,10 +24,9 @@ class FetcherService:
             flat_commits = await  self.__collect_and_flating_commits(commit_lists)
             all_commits = flat_commits[:command.count]
 
-            all_existing_author_map = await self._manage_authors(all_commits)
-            grouped_commits = await self.__collecting_authors_commits(all_commits, all_existing_author_map)
+            all_existing_author_map = await self.author_service.manage_authors(all_commits)
 
-            stored_commits =  await self._store_authors_commits(grouped_commits)
+            stored_commits =  await self.commit_service.process_and_store_commits(all_commits, all_existing_author_map)
 
             return {"message": "commits fetching successfully", "stored_commits": stored_commits}
 
@@ -62,6 +44,8 @@ class FetcherService:
         async def fetch_page(page):
             async with self.semaphore:
                 try:
+                    self.logger.info(f"Fetching page {page}")
+
                     result = await fetcher.fetch(default_per_page, page)
                     if not result:
                         self.logger.warning(f"No results in page {page}")
@@ -88,40 +72,3 @@ class FetcherService:
             flat_commits.extend(commit_list)
 
         return  flat_commits
-
-
-    async def _manage_authors(self, all_commits:list) -> Dict :
-
-        unique_author_names = list(set(commit["author"].strip() for commit in all_commits))
-
-        query = GetAuthorsByNamesQuery(unique_author_names=unique_author_names)
-        existing_author_map = await self.get_author_by_name_handler.handle(query)
-
-        return  await self._store_new_authors(unique_author_names, existing_author_map)
-
-
-    async def _store_new_authors(self, unique_author_names: list[str], existing_author_map: dict ) -> Dict:
-
-        command = CreateAuthorCommand(
-            unique_author_names = unique_author_names,
-            existing_author_map = existing_author_map
-        )
-        return  await self.create_author_handler.handle(command)
-
-
-    async def __collecting_authors_commits(self, all_commits: list, all_existing_author_map: dict) -> Dict :
-
-        grouped_commits = defaultdict(list)
-        for commit in all_commits:
-            author_name = commit["author"].strip()
-            author_id = all_existing_author_map.get(author_name)
-            if not author_id:
-                continue
-            grouped_commits[author_id].append(commit)
-
-        return  grouped_commits
-
-    async def _store_authors_commits(self, grouped_commits) -> int:
-        store_command = StoreCommitsCommand(grouped_commits=grouped_commits)
-        return  await self.store_commits_handler.handle(store_command)
-

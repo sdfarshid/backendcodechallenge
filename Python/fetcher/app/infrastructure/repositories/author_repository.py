@@ -19,7 +19,7 @@ from app.utilities.log import DebugError
 class AuthorRepository(IAuthorRepository):
 
 
-    def __init__(self, db: AsyncSession = Depends(get_db)):
+    def __init__(self, db: AsyncSession):
         self.db = db
 
     async def add_author(self, author: Author) -> Author:
