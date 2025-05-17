@@ -13,7 +13,7 @@ class StoreCommitsCommandHandler:
         self.commit_repository = commit_repository
         self.logger = commit_logger
 
-    async def handle(self, command: StoreCommitsCommand):
+    async def handle(self, command: StoreCommitsCommand) -> int:
         seen_hashes = set()
         commits_to_store = []
 
@@ -29,7 +29,7 @@ class StoreCommitsCommandHandler:
                     )
 
         try:
-            await self.commit_repository.add_commits_batch(commits_to_store)
+          return  await self.commit_repository.add_commits_batch(commits_to_store)
         except Exception as e:
             self.logger.error(f"Failed to store  StoreCommitsCommandHandler : {e}")
             raise RuntimeError(f"Failed to store commits: {e}")

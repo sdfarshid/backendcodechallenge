@@ -9,8 +9,7 @@ from app.domain.entities.commit import Commit
 class ICommitRepository (ABC):
 
     @abstractmethod
-    async def add_commits_batch(self, commits: List[Commit]) -> None:
-
+    async def add_commits_batch(self, commits: List[Commit]) -> int:
         pass
 
     @abstractmethod

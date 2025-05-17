@@ -25,7 +25,7 @@ class CommitRepository(ICommitRepository):
     def __init__(self, db: AsyncSession = Depends(get_db)):
         self.db = db
 
-    async def add_commits_batch(self, commits: List[Commit]) -> None:
+    async def add_commits_batch(self, commits: List[Commit]) -> int:
 
         values = [{
             "id": commit.id if commit.id else uuid4(),
@@ -43,6 +43,8 @@ class CommitRepository(ICommitRepository):
         try:
             result = await self.db.execute(stmt)
             await self.db.commit()
+            inserted_ids = result.scalars().all()
+            return len(inserted_ids)
         except Exception as e:
             await self.db.rollback()
             DebugError(f"PostgresSQL batch insert failed: {e}")
