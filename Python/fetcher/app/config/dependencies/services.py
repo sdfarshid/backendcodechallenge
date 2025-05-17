@@ -24,7 +24,9 @@ def get_author_service(
     filter_handler: GetAuthorsByNamesCommandHandler = Depends(get_authors_by_name_handler),
     get_list_handler: GetAuthorsByNamesCommandHandler = Depends(get_list_authors_handler)
 ) -> AuthorService:
-    return AuthorService(get_handler, create_handler)
+    return AuthorService(get_author_by_name_handler=filter_handler,
+                         get_list_authors_handler = get_list_handler,
+                         create_author_handler=create_handler)
 
 def get_fetcher_service(
     author_service: AuthorService = Depends(get_author_service),
