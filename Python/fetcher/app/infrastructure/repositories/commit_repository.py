@@ -51,10 +51,16 @@ class CommitRepository(ICommitRepository):
             raise
 
 
-    async def get_commit_by_author_id(self, author_id: UUID, pagination: PaginationParams) -> List[Commit] | None:
+
+    async def list_commits(self, pagination: PaginationParams, author_id: [UUID, None]) -> List[Commit] | None:
         try:
-            stmt = select(CommitModel).where(CommitModel.author_id == author_id)
-            result = await self.db.execute(stmt)
+            query = select(CommitModel)
+            if author_id:
+                query = query.where(CommitModel.author_id == author_id)
+
+            query = query.offset(pagination.offset).limit(pagination.limit)
+
+            result = await self.db.execute(query)
             rows_model = result.scalars().all()
 
             if rows_model is None:
@@ -63,8 +69,5 @@ class CommitRepository(ICommitRepository):
             return [mapper.commit_db_to_domain_model(commit) for commit in rows_model]
 
         except SQLAlchemyError as e:
-            DebugError(f" AuthorRepository - get_author_by_name :  {e}")
-            raise RuntimeError(f"Database error while fetching author by name: {e}") from e
-
-
+            raise RuntimeError(f"Database error while fetching lis of  commits: {e}") from e
 
