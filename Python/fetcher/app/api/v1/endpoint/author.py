@@ -15,7 +15,7 @@ ServiceDependency = Annotated[AuthorService, Depends(get_author_service)]
 
 
 
-@router.get("/fetch")
+@router.get("/list")
 @handle_exceptions
 async def get_commits(
             service: ServiceDependency,
