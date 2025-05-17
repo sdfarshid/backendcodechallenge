@@ -15,6 +15,8 @@ import pytest
 from app.application.services.fetcher_service import FetcherService
 
 
+
+
 @pytest.mark.asyncio
 async def test_parallel_fetch_speed(monkeypatch):
     fake_fetcher = MagicMock()
@@ -30,9 +32,9 @@ async def test_parallel_fetch_speed(monkeypatch):
     mock_factory.create_fetcher.return_value = fake_fetcher
 
     service = FetcherService(
-        get_author_by_name_handler=AsyncMock(),
-        create_author_handler=AsyncMock(),
-        store_commits_handler=AsyncMock(),
+        author_service=AsyncMock(),
+        commit_service=AsyncMock(),
+        logger=MagicMock(),
         fetcher_factory=mock_factory
     )
     start = time.perf_counter()
@@ -58,9 +60,9 @@ async def test_parallel_fetch_partial_failure():
     mock_factory.create_fetcher.return_value = fake_fetcher
 
     service = FetcherService(
-        get_author_by_name_handler=AsyncMock(),
-        create_author_handler=AsyncMock(),
-        store_commits_handler=AsyncMock(),
+        author_service=AsyncMock(),
+        commit_service=AsyncMock(),
+        logger=MagicMock(),
         fetcher_factory=mock_factory
     )
 
@@ -90,9 +92,9 @@ async def test_parallel_fetch_all_failures():
     mock_factory.create_fetcher.return_value = fake_fetcher
 
     service = FetcherService(
-        get_author_by_name_handler=AsyncMock(),
-        create_author_handler=AsyncMock(),
-        store_commits_handler=AsyncMock(),
+        author_service=AsyncMock(),
+        commit_service=AsyncMock(),
+        logger=MagicMock(),
         fetcher_factory=mock_factory
     )
 

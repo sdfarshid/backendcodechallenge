@@ -1,4 +1,7 @@
 import os
+
+from app.domain.interface.Iauthor_repository import IAuthorRepository
+
 os.environ["GITHUB_TOKEN"] = "fake-token"
 os.environ["GITHUB_REPO"] = "fake/repo"
 
@@ -12,6 +15,11 @@ import uuid
 import pytest
 
 
+@pytest.fixture
+async def mock_author_repo():
+    repo = AsyncMock(spec=IAuthorRepository)
+    return repo
+
 @pytest.mark.asyncio
 async def test_get_authors_by_names_success():
     fake_authors = [
@@ -22,7 +30,7 @@ async def test_get_authors_by_names_success():
     mock_repo = MagicMock()
     mock_repo.get_authors_by_names = AsyncMock(return_value=fake_authors)
 
-    handler = GetAuthorsByNamesCommandHandler(mock_repo)
+    handler = GetAuthorsByNamesCommandHandler(mock_repo, MagicMock())
 
     query = GetAuthorsByNamesQuery(unique_author_names=["author1", "author2"])
     result = await handler.handle(query)
@@ -38,7 +46,7 @@ async def test_get_authors_by_names_no_match():
     mock_repo = MagicMock()
     mock_repo.get_authors_by_names = AsyncMock(return_value=[])
 
-    handler = GetAuthorsByNamesCommandHandler(mock_repo)
+    handler = GetAuthorsByNamesCommandHandler(mock_repo, MagicMock())
 
     query = GetAuthorsByNamesQuery(unique_author_names=["nonexistent"])
     result = await handler.handle(query)
@@ -52,7 +60,7 @@ async def test_get_authors_by_names_empty_input():
     mock_repo = MagicMock()
     mock_repo.get_authors_by_names = AsyncMock(return_value=[])
 
-    handler = GetAuthorsByNamesCommandHandler(mock_repo)
+    handler = GetAuthorsByNamesCommandHandler(mock_repo, MagicMock())
 
     query = GetAuthorsByNamesQuery(unique_author_names=[])
     result = await handler.handle(query)
@@ -65,7 +73,7 @@ async def test_get_authors_by_names_raises_exception():
     mock_repo = MagicMock()
     mock_repo.get_authors_by_names = AsyncMock(side_effect=Exception("DB failure"))
 
-    handler = GetAuthorsByNamesCommandHandler(mock_repo)
+    handler = GetAuthorsByNamesCommandHandler(mock_repo, MagicMock())
 
     query = GetAuthorsByNamesQuery(unique_author_names=["authorX"])
 
@@ -84,7 +92,7 @@ async def test_get_authors_by_names_duplicate_input():
     mock_repo = MagicMock()
     mock_repo.get_authors_by_names = AsyncMock(return_value=[author])
 
-    handler = GetAuthorsByNamesCommandHandler(mock_repo)
+    handler = GetAuthorsByNamesCommandHandler(mock_repo, MagicMock())
 
     query = GetAuthorsByNamesQuery(unique_author_names=["author1", "author1"])
     result = await handler.handle(query)
