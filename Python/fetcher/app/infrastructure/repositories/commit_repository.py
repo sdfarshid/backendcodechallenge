@@ -41,7 +41,7 @@ class CommitRepository(ICommitRepository):
         )
 
         try:
-            await self.db.execute(stmt)
+            result = await self.db.execute(stmt)
             await self.db.commit()
         except Exception as e:
             await self.db.rollback()
