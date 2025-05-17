@@ -49,7 +49,7 @@ class CommitRepository(ICommitRepository):
         try:
             stmt = select(CommitModel).where(CommitModel.author_id == author_id)
             result = await self.db.execute(stmt)
-            rows_model = result.scalars().one_or_none()
+            rows_model = result.scalars().all()
 
             if rows_model is None:
                 return None
