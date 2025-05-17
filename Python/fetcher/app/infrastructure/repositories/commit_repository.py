@@ -33,8 +33,12 @@ class CommitRepository(ICommitRepository):
             "author_id": commit.author_id
         } for commit in commits]
 
-        stmt = insert(CommitModel).values(values)
-        stmt = stmt.on_conflict_do_nothing(index_elements=["hash"])
+        stmt = (
+            insert(CommitModel)
+            .values(values)
+            .on_conflict_do_nothing(index_elements=["hash"])
+            .returning(CommitModel.id)
+        )
 
         try:
             await self.db.execute(stmt)
