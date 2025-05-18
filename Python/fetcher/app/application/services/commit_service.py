@@ -23,6 +23,8 @@ class CommitService:
     async def process_and_store_commits(self, all_commits, all_existing_author_map):
         try:
             grouped_commits =  self.group_commits_by_author(all_commits, all_existing_author_map)
+            self.logger.info(f"grouped_commits : {grouped_commits}")
+
             result = await self.store_commits(grouped_commits)
             self.logger.info("Successfully stored commits")
             return result

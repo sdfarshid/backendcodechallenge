@@ -28,6 +28,8 @@ class FetcherService:
 
             stored_commits =  await self.commit_service.process_and_store_commits(all_commits, all_existing_author_map)
 
+            self.logger.info(f"commits fetching successfully stored_commits: {stored_commits}")
+
             return {"message": "commits fetching successfully", "stored_commits": stored_commits}
 
         except Exception as e:
