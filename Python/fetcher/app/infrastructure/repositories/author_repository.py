@@ -63,9 +63,13 @@ class AuthorRepository(IAuthorRepository):
 
     async def list_authors(self, pagination: PaginationParams) -> List[Author] | None:
         try:
-            result = await self.db.execute(
-                select(AuthorModel).offset(pagination.offset).limit(pagination.limit)
-            )
+
+            query = select(AuthorModel).order_by(AuthorModel.name)
+            if pagination.limit > 0:
+                query = query.offset(pagination.offset).limit(pagination.limit)
+
+            result = await self.db.execute(query)
+
             authors_model =  result.scalars().all()
 
             return [mapper.author_db_to_domain_model(author) for author in authors_model]
