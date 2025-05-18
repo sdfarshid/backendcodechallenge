@@ -47,8 +47,7 @@ class FetcherService:
             async with self.semaphore:
                 try:
                     self.logger.info(f"Fetching page {page}")
-
-                    result = await fetcher.fetch(default_per_page, page)
+                    result = await fetcher.fetch(page=page)
                     if not result:
                         self.logger.warning(f"No results in page {page}")
                     return result

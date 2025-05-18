@@ -16,7 +16,7 @@ class GithubFetcherAdapter(FetcherAdapterInterface):
         return self._DEFAULT_PER_PAGE
 
 
-    async def fetch(self, count: int, page: int) -> List[Dict]:
+    async def fetch(self, page: int) -> List[Dict]:
         raw_commits = await self.github_fetcher.fetch_raw_commits(self.repo, page)
         commits = []
         for commit in raw_commits:

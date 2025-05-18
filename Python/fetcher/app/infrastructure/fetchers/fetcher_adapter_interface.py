@@ -11,7 +11,7 @@ class FetcherAdapterInterface(ABC):
 
 
     @abstractmethod
-    async def fetch(self, count: int, page:int) -> List[Dict]:
+    async def fetch(self, page:int) -> List[Dict]:
         pass
 
 
