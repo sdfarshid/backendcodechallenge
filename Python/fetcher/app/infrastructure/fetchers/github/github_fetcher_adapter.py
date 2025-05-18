@@ -1,19 +1,18 @@
-from typing import Dict, List, Optional
+from typing import Dict, List
 from app.infrastructure.fetchers.fetcher_adapter_interface import FetcherAdapterInterface
 from app.infrastructure.fetchers.github.github_fetcher import GithubFetcher
 
 
 class GithubFetcherAdapter(FetcherAdapterInterface):
-    _DEFAULT_PER_PAGE = 100
 
-    def __init__(self, token: str, repo: str):
+    def __init__(self, github_fetcher: GithubFetcher, repo: str):
+        self.github_fetcher = github_fetcher
         self.repo = repo
-        self.github_fetcher = GithubFetcher(token=token, per_page=self._DEFAULT_PER_PAGE)
 
 
     @property
     def default_per_page(self) -> int:
-        return self._DEFAULT_PER_PAGE
+        return self.github_fetcher.DEFAULT_PER_PAGE
 
 
     async def fetch(self, page: int) -> List[Dict]:

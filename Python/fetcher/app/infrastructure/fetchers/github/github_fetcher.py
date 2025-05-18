@@ -7,6 +7,9 @@ from app.utilities.log import commit_logger
 
 class GithubFetcher:
 
+    DEFAULT_PER_PAGE = 100
+
+
     def __init__(self, token: str, per_page: int ):
         auth = Auth.Token(token)
         self.github = Github(auth=auth, per_page=per_page)
