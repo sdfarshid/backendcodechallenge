@@ -2,20 +2,30 @@
 
 I used different methods to debug this mini-project:
 
-- First, I used the PyCharm debugger with breakpoints to stop and check parts of the code during runtime.
-- I also added custom logger functions to track and log what happens in the program. These logs helped me follow the flow and find problems. You can find the logger code in the `utilities` folder.
-- For some parts of the code, I checked the network activity in the browser developer tools to see the API requests and responses.
+- I used the PyCharm debugger with breakpoints to stop and check the program during execution.
+- I added a custom logger in the `utilities` folder. The logger helps to follow the program flow and catch any errors using `try/catch`.
+- I used different log levels (like info and error) to better understand what happens at each step.
+- For more advanced debugging, I used `docker exec` to enter the container and check running processes, logs, and the database state.  
+  For example, I inspected the Postgresql file directly to see if the commits were saved correctly and if there were any duplicate entries.
+- I also used browser network tools (DevTools) to see the API requests and responses and make sure the backend is working correctly.
 
+These tools helped me find and fix problems more easily.
 These tools helped me understand what the code was doing and fix issues step by step.
 ### 2. Please give a detailed answer on your approach to test this mini-project
 
-Because the project is small, I used manual testing for most parts. I ran the app and checked if the features worked as expected.
 
-Also, I created some unit tests for important parts, especially when I made many changes. I tried to connect smaller parts and then test the whole flow.
+Because the project is small, I mostly used manual testing. I ran the app and checked if the main features worked as expected.
 
-For example, when I worked on fetching data from GitHub, I first used `httpx` to send a basic request. I saw that it was slow, so I decided to use multithreading to make parallel requests. This helped the program to not be blocked and work faster.
+I also created unit tests for important parts of the project, especially when I made many changes. I tested small components first and then checked how they worked together as a full flow.
 
-After that, I tested smaller parts again to make sure everything worked correctly. So I used both manual and automated tests in this project.
+For example, when I was working on fetching data from GitHub, I used `httpx` to send a simple request. I noticed it was very slow, so I added multithreading to make parallel requests. This helped make the process faster and prevented blocking.
+
+To be sure the requests were running in parallel, I wrote tests for that part too. I also monitored the request times using HTTP logs to compare before and after changes.
+
+Later, I added integration tests to check the full behavior of my services. These tests helped me make sure everything works together correctly, from fetching commits to saving and displaying them.
+
+So, in this project, I used both manual testing and automated testing (unit and integration).
+
 ### 3. Imagine this mini-project needs microservices with one single database; how would you draft an architecture?
 
 I tried to build this project based on Domain-Driven Design (DDD), and my goal was to make it ready for a microservice architecture. But because of time limits, I couldn't fully complete the structure.
