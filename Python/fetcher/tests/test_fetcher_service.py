@@ -70,7 +70,7 @@ async def test_fetch_and_store_commits_parallel():
 
 @pytest.mark.asyncio
 async def test_fetch_and_store_commits_fetcher_partial_failure(caplog):
-    async def fake_fetch(per_page, page):
+    async def fake_fetch(page):
         if page == 2:
             raise Exception("API error")
         return [make_commit("sha", "Alice")]

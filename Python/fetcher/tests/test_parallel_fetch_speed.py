@@ -48,7 +48,7 @@ async def test_parallel_fetch_partial_failure():
     fake_fetcher = MagicMock()
     fake_fetcher.default_per_page = 1
 
-    async def maybe_fail(per_page, page):
+    async def maybe_fail(page):
         if page == 3:
             raise Exception("Page 3 failed")
         await asyncio.sleep(0.1)
