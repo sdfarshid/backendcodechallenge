@@ -1,9 +1,6 @@
-import os
 
 from app.application.commands.fetch_commits import FetchCommitsCommand
 
-os.environ["GITHUB_TOKEN"] = "fake-token"
-os.environ["GITHUB_REPO"] = "fake/repo"
 
 
 import asyncio

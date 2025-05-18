@@ -1,8 +1,5 @@
-import os
 from unittest.mock import MagicMock, AsyncMock
 
-os.environ["GITHUB_TOKEN"] = "fake-token"
-os.environ["GITHUB_REPO"] = "fake/repo"
 
 import uuid
 import pytest

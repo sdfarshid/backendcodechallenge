@@ -2,8 +2,6 @@ import os
 
 from app.domain.interface.Iauthor_repository import IAuthorRepository
 
-os.environ["GITHUB_TOKEN"] = "fake-token"
-os.environ["GITHUB_REPO"] = "fake/repo"
 
 
 from unittest.mock import MagicMock, AsyncMock

@@ -1,4 +1,3 @@
-import os
 import datetime
 import uuid
 import pytest
@@ -9,8 +8,6 @@ from app.application.commands.store_commits import StoreCommitsCommand
 from app.application.handlers.store_commits import StoreCommitsCommandHandler
 from app.domain.entities.commit import Commit
 
-os.environ["GITHUB_TOKEN"] = "fake-token"
-os.environ["GITHUB_REPO"] = "fake/repo"
 
 def fake_commit(hash_value: str) -> dict:
     return {
