@@ -30,7 +30,8 @@ class CommitRepository(ICommitRepository):
         values = [{
             "id": commit.id if commit.id else uuid4(),
             "hash": commit.hash,
-            "author_id": commit.author_id
+            "author_id": commit.author_id,
+            "created_at": commit.created_at
         } for commit in commits]
 
         stmt = (
@@ -54,11 +55,15 @@ class CommitRepository(ICommitRepository):
 
     async def list_commits(self, pagination: PaginationParams, author_id: [UUID, None]) -> List[Commit] | None:
         try:
-            query = select(CommitModel)
+
+            query = select(CommitModel).order_by(CommitModel.created_at.desc())
+
             if author_id:
                 query = query.where(CommitModel.author_id == author_id)
 
-            query = query.offset(pagination.offset).limit(pagination.limit)
+            if pagination.limit > 0 :
+                query =  query.offset(pagination.offset).limit(pagination.limit)
+
 
             result = await self.db.execute(query)
             rows_model = result.scalars().all()

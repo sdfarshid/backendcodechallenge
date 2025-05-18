@@ -25,5 +25,6 @@ class mapper:
         return Commit(
             id=commit_db.id,
             hash=commit_db.hash,
-            author_id=commit_db.author_id
+            author_id=commit_db.author_id,
+            created_at = commit_db.created_at
         )

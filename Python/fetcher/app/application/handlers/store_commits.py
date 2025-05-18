@@ -21,12 +21,14 @@ class StoreCommitsCommandHandler:
                     commits_to_store.append(
                         Commit(
                             hash=commit["hash"],
+                            created_at=commit["created_at"],
                             author_id=author_id
                         )
                     )
 
         try:
-          return  await self.commit_repository.add_commits_batch(commits_to_store)
+            self.logger.info(f"commits_to_store : {commits_to_store}")
+            return  await self.commit_repository.add_commits_batch(commits_to_store)
         except Exception as e:
             self.logger.error(f"Failed to store  StoreCommitsCommandHandler : {e}")
             raise RuntimeError(f"Failed to store commits: {e}")
