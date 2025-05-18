@@ -10,3 +10,4 @@ pytest
 pytest-asyncio
 PyGithub
 tenacity
+jinja2
