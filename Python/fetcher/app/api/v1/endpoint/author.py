@@ -17,7 +17,7 @@ ServiceDependency = Annotated[AuthorService, Depends(get_author_service)]
 
 @router.get("/list")
 @handle_exceptions
-async def get_commits(
+async def get_authors(
             service: ServiceDependency,
             pagination: PaginationParams = Depends(get_pagination_params)
             ):
