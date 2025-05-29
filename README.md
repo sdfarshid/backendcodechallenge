@@ -1,41 +1,63 @@
-## Backend Coding Challenge 
+#  Backend Coding Challenge — GitHub Commits Collector
 
-In order to be considered for the Backend position, you must complete the following task. 
+This repository contains the implementation of a backend coding challenge, built with **Python** and **FastAPI**, following **Domain-Driven Design (DDD)** and **CQRS** architectural principles. The goal is to build a scalable and extendable foundation for a future microservice-based system.
 
-### Prerequisites
+---
 
-- Experience with PHP or Python, along with experience using a framework such as Symfony, Laravel, Flask, Django, etc.
-- Database knowledge (MySQL, MongoDB, Postgres, etc.)
+##  Tech Stack
 
-## Task
+- **Language**: Python
+- **Framework**: FastAPI
+- **Architecture**: Domain-Driven Design (DDD) + CQRS
+- **Database**: PostgreSQL
+- **Containerization**: Docker
+- **ORM/DB Layer**: SQLAlchemy
+- **Package Management**: Poetry / pip / Composer (if PHP-based alternative)
 
+---
 
-* Find the 1000 most recent commits (only hashes)
+##  Challenge Description
 
-* Create a model and store the 1000 most recent commits in the database. Make sure to avoid any duplicates.
+You are asked to implement the following:
 
-* Create a route and view that displays the recent commits by author from the database. 
-
-* Keep your solution flexible enough to be able to later on provide support for the bitbucket-api/gitlab-api, etc...
-
+- Retrieve the **1000 most recent commits** (only the commit hashes) from a public GitHub repository.
+- Store those commits in a database using a model, making sure **no duplicates** are saved.
+- Build a route and view that displays **commits grouped by author** from the database.
+- Structure your solution to be flexible for future support of **Bitbucket**, **GitLab**, and other VCS APIs.
+- Include automated tests.
+- The project must use **Composer** (if PHP) or **Docker** (for deployment).
   
+---
 
-## Key Points We Are Looking For
-* Scalable solution
-* Ability to use libraries
-* Ability to create a basic model and retrieve information from the database
-* Use Composer
-* Use Docker
-* Needs to have tests
- 
-## Implementation and Conceptual Questions
+##  Setup & Installation
 
-Please answer these questions in a Markdown file and commit it to the repo.
+Please refer to the [**`Setup.md`**](./Setup.md) file for full environment setup instructions using Docker.
 
-Please use English for the answers, and you can use drawings for a better description
+---
 
-1. How were you debugging this mini-project? Which tools?
-2. Please give a detailed answer on your approach to test this mini-project.
-3. Imagine this mini-project needs microservices with one single database; how would you draft an architecture? 
-4. How would your solution differ if, all of a sudden, instead of saving to a Database, you had to call another external API to store and receive the commits?
-  
+## ❓ QA & Design Approach
+
+All architecture decisions, debugging strategies, and microservice readiness explanations are documented in the [**`QA.md`**](./QA.md) file.
+
+---
+
+## Requirements Checklist
+
+- [x] Fetch and store latest 1000 GitHub commits
+- [x] Avoid saving duplicate commits
+- [x] Display commits by author
+- [x] Designed for future GitLab/Bitbucket API support
+- [x] Includes database model and route layer
+- [x] Dockerized
+- [x] Test coverage provided
+- [x] Clear architectural documentation in `QA.md`
+
+---
+
+##  License
+
+This project is created for technical evaluation purposes.
+
+---
+
+Feel free to fork and build upon it 🚀
