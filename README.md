@@ -31,13 +31,13 @@ You are asked to implement the following:
 
 ##  Setup & Installation
 
-Please refer to the [**`Setup.md`**](./Setup.md) file for full environment setup instructions using Docker.
+Please refer to the [**`Setup.md`**](./setup.md) file for full environment setup instructions using Docker.
 
 ---
 
 ## ❓ QA & Design Approach
 
-All architecture decisions, debugging strategies, and microservice readiness explanations are documented in the [**`QA.md`**](./QA.md) file.
+All architecture decisions, debugging strategies, and microservice readiness explanations are documented in the [**`QA.md`**](./Q-A.md) file.
 
 ---
 
