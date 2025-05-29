@@ -26,7 +26,15 @@ You are asked to implement the following:
 - Structure your solution to be flexible for future support of **Bitbucket**, **GitLab**, and other VCS APIs.
 - Include automated tests.
 - The project must use **Composer** (if PHP) or **Docker** (for deployment).
-  
+---
+
+## Performance & Design Notes
+
+- The data fetching logic has been optimized using **Python's `asyncio` event loop**, **coroutines (`async`/`await`)**, and **multithreading**, allowing for efficient parallel API calls.
+- In development mode, **data fetching routes are publicly accessible** for easy inspection.
+- A **dedicated script** is also provided to perform controlled and batch-safe fetching of commits outside the public API routes.
+
+These design decisions aim to ensure both **developer convenience** and **production scalability**.  
 ---
 
 ##  Setup & Installation
@@ -34,6 +42,9 @@ You are asked to implement the following:
 Please refer to the [**`Setup.md`**](./setup.md) file for full environment setup instructions using Docker.
 
 ---
+
+
+
 
 ## ❓ QA & Design Approach
 
